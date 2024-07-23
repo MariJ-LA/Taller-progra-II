@@ -1,0 +1,60 @@
+---
+title: "Visualización del dataset 'ToyotaCorolla' con Seaborn"
+autor: María José Leiva Abarca
+---
+
+## Visualización de datos en Seaborn
+
+```{python}
+# Importar las librerias nesesarias
+import seaborn as sns 
+import matplotlib.pyplot as plt
+import pandas as pd # Para cargar el dataset que voy a utilizar para los graficos
+
+# Cargar el dataset desde un archivo CSV que esta en mi pc
+ruta_archivo = "C:/Users/maria/Desktop/Técnico Análisis y visualización de datos/Tercer cuatrimestre/Progra 2/Tarea_programada/ToyotaCorolla.csv"
+dataset = pd.read_csv(ruta_archivo)
+```
+
+```{python}
+# Gráfico #1
+# Gráfico categórico
+#| label: fig-boxplot
+#| fig-cap: "Tipo de Combustión por Año de Fabricación"
+
+plt.figure(figsize=(10, 6))
+sns.boxplot(x="Fuel_Type", y="Mfg_Year", data=dataset, color="#A52A2A")
+plt.title("Tipo de Combustión por Año de Fabricación")
+plt.show()
+```
+
+```{python}
+# Gráfico #2
+# Gráfico relacional
+#| label: fig-scatterplot
+#| fig-cap: "Relación entre precio y caballos de fuerza, por tipo de combustión"
+
+plt.figure(figsize=(10, 6))
+sns.scatterplot(x="Price", y="HP", hue="Fuel_Type", data=dataset)
+plt.title("Relación entre precio y caballos de fuerza, por tipo de combustión")
+plt.show()
+```
+
+```{python}
+# Grafico #3
+# Gráfico de distribución
+#| label: fig-histogram
+#| fig-cap: "Distrubución de autos según su precio"
+
+plt.figure(figsize=(10, 6))
+sns.histplot(data=dataset, x="Price",kde= True, color="#A52A2A")
+plt.title("Distrubución de autos según su precio")
+plt.show()
+```
+
+```{markdown}
+ # El proceso de la creacion de los gráficos se me facilito mucho ya que anteriormente habiamos visto el tema por lo que ya era algo con lo que estaba familiarizada, pero igualmente entre a la biblioteca a ver los otros garficos y para recordar mejor los tipos de variables que se podian utilizar en cada uno de ellos.
+ 
+ # En lo unico que diria que me atrase un poco mas fue en buscar una base de datos que me gustara y tubiera las variables que nesesitaba para cada grafico.
+```
+
