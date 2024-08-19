@@ -1,0 +1,92 @@
+---
+title: Proyecto final
+autor: María José Leiva Abarca
+---
+
+
+```{python}
+# Importar las librerias nesesarias
+import seaborn as sns 
+import matplotlib.pyplot as plt
+import os
+import pandas as pd # Para cargar el dataset que voy a utilizar para los graficos
+
+# Cargar el dataset desde un archivo CSV que esta en mi pc
+ruta_archivo = "C:\\Users\\maria\\Desktop\\Técnico Análisis y visualización de datos\\Tercer cuatrimestre\\Progra 2\\Proyecto_final\\hockey_teams_2011.csv"
+dataset = pd.read_csv(ruta_archivo)
+# Verificar si el archivo existe
+if os.path.isfile(ruta_archivo):
+    print("El archivo se encuentra en la ruta especificada.")
+```
+
+
+# Gráfico Categórico
+
+```{python}
+
+# Para realizar este grafico decidi hacer un top 5 de los equipos con mas victorias ya que mostrar todos los graficos que me genero el endpoint eran demasiados
+
+# Hice un barplot con las indicaciones de la galeria de seaborn
+
+# Filtrar los 5 equipos con más victorias
+
+# Filtrar los 5 equipos con más victorias
+top_5_equipos = dataset.nlargest(5, 'Victorias')
+
+# Transformar los datos para el gráfico para poder ver las dos variables a la misma vez
+df_goles = top_5_equipos.melt(id_vars='Nombre', value_vars=['Goles a favor', 'Goles en contra'],
+                               var_name='Tipo de Goles', value_name='Cantidad')
+
+# Inicializar la figura de matplotlib
+f, ax = plt.subplots(figsize=(12, 8))
+
+# Graficar los goles a favor y goles en contra para los 5 equipos con más victorias
+sns.barplot(x='Nombre', y='Cantidad', hue='Tipo de Goles', data=df_goles, 
+            palette={'Goles a favor': 'lightgreen', 'Goles en contra': 'darkblue'}, ax=ax)
+
+# Agregar leyenda y etiquetas informativas
+ax.legend(title='Tipo de Goles')
+ax.set(xlabel="Equipo", ylabel="Cantidad de Goles")
+ax.set_title("Goles a Favor y en Contra para los 5 Equipos con Más Victorias en 2011")
+
+```
+
+## Conclución del gráfico
+### Los equipos en el top 5 están anotando más goles de los que reciben, lo que indica que tienen un rendimiento positivo en términos de anotaciones. Sin embargo, la brecha entre los goles a favor y los goles en contra no es lo suficientemente amplia como para mostrar un dominio absoluto sobre sus oponentes.
+
+# Gráfico Relacional
+
+```{python}
+# Inicializar la figura de matplotlib
+plt.figure(figsize=(10, 6))
+
+# Graficar la relación entre Goles a Favor y Goles en Contra
+sns.scatterplot(x='Goles a favor', y='Goles en contra', data=dataset, color='darkblue')
+
+plt.xlabel("Goles a Favor")
+plt.ylabel("Goles en Contra")
+plt.title("Relación entre Goles a Favor y Goles en Contra")
+plt.tight_layout()
+plt.show()
+
+```
+
+## Conclución
+### Se puede notar que hay un grupo de equipos que está anotando entre 200 y 220 goles, pero está recibiendo entre 220 y 240 goles. Esto indica que, a pesar de su capacidad ofensiva para anotar una cantidad considerable de goles, su defensa no es suficiente para evitar que reciban muchos goles. 
+
+# Gráfico de Distribución
+
+```{python}
+# Inicializar la figura
+plt.figure(figsize=(10, 6))
+
+# Crear el gráfico de cajas
+sns.boxplot(data=dataset, x='Victorias', color='lightgreen')
+
+# Agregar etiquetas y título
+plt.xlabel("Victorias")
+plt.title("Distribución de Victorias entre los Equipos")
+```
+
+# Conclusión
+## Se puede observar que la mediana de las victorias, que divide a los equipos en dos grupos iguales, es de aproximadamente 41. Esto indica que la mitad de los equipos han ganado 41 victorias o menos, mientras que la otra mitad ha ganado más de 41 victorias.
